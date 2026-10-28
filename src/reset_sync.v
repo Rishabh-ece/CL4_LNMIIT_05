@@ -1,5 +1,6 @@
-
-module reset_sync (
+module reset_sync #(
+  parameter RST_SYNC = 1
+) (
   input  wire clk,
   input  wire rst_n,
   output wire internal_rst_n
@@ -13,6 +14,7 @@ module reset_sync (
     rst_s2 <= rst_s1;
   end
 
-  assign internal_rst_n = rst_s2;
+  assign internal_rst_n = (RST_SYNC == 1)
+                        ? rst_s2 : rst_n;
 
 endmodule
